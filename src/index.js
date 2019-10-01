@@ -9,14 +9,24 @@ module.exports = function check(str, bracketsConfig) {
   });
   br = str.split('');
   br.map(item => {
+    console.log(item);
     if (brackets[item]) {
-      expected.push(brackets[item]);
-    } else {
-      if (item === expected[expected.length-1]) {
+      if ((brackets[item] == '|' && expected[expected.length-1] == '|') || (brackets[item] == '7' && expected[expected.length-1] == '7') ||(brackets[item] == '8' && expected[expected.length-1] == '8'))  {
         expected.pop();
+      } else {
+        expected.push(brackets[item]);
+
+      }
+      
+    } else {
+        if (expected.length == 0) {
+          expected.push('null');
+        } 
+        if (item === expected[expected.length-1]) {
+          expected.pop();
       }
     }
   });
   return expected.length == 0 ? true : false; 
 }
-//console.log(check('|()|', [['(', ')'], ['|', '|']]));
+//console.log(check(')()',[['(', ')'], ['[', ']'], ['{', '}'], ['|', '|']]));
